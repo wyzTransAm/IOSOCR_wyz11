@@ -21,16 +21,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //  self.resultArr = [[NSMutableArray alloc]init];
-    
+    self.FinalArr = [[NSMutableArray alloc]init];
     self.btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 100, 50)];
     self.btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.btn.backgroundColor = [UIColor grayColor];
     [self.btn setTitle:@"请点击" forState:UIControlStateNormal]; // 正常状态
     [self.btn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.btn ];
+    [self.view addSubview:self.btn];
     
     
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 100, WIDTH_wyz,HEIGHT_wyz ) style:UITableViewStylePlain];
+    self.passLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT_wyz-100, WIDTH_wyz, 100)];
+    [self.view addSubview:self.passLabel];
+    self.passLabel.textColor = [UIColor redColor];
+    
+    
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 100, WIDTH_wyz,HEIGHT_wyz/2-100 ) style:UITableViewStylePlain];
     
     
     self.table.dataSource = self;
@@ -39,7 +44,7 @@
     
     [self.view addSubview:self.table];
     
-    self.table2 = [[UITableView alloc]initWithFrame:CGRectMake(0, HEIGHT_wyz/2+100, WIDTH_wyz,HEIGHT_wyz/2 ) style:UITableViewStylePlain];
+    self.table2 = [[UITableView alloc]initWithFrame:CGRectMake(0, HEIGHT_wyz/2, WIDTH_wyz,HEIGHT_wyz/2-100 ) style:UITableViewStylePlain];
     self.table2.dataSource = self;
     
     self.table2.delegate = self;
@@ -314,48 +319,47 @@
             
             //                    UILabel *num = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 500, 15)];
             //                    num.text =message;
+            
+            NSMutableArray *arrAdd = [[NSMutableArray alloc]init];
+            
             UILabel *num = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 50, 15)];
             num.text =self.SlotArr[indexPath.row];
+            
+            [arrAdd addObject:self.SlotArr[indexPath.row]];
             
             NSMutableArray *temparr =[message componentsSeparatedByString:@"\n"];
             
             UILabel *pn = [[UILabel alloc]initWithFrame:CGRectMake(150, 10, 150, 15)];
             UILabel *sn = [[UILabel alloc]initWithFrame:CGRectMake(20, 50, 100, 15)];
             UILabel *ver =[[UILabel alloc]initWithFrame:CGRectMake(150, 50, 150, 15)];
+            
+          
             for (int i =0; i<temparr.count; i++) {
                 
                 NSString *pntemp =temparr[i];
-                if ([pntemp containsString:@"CEN"]) {
+                if ([pntemp containsString:@"CEN"]||[pntemp containsString:@"uea"]||[pntemp containsString:@"RMA"]||[pntemp containsString:@"Lean"]||[pntemp containsString:@"pass"]||[pntemp containsString:@"ssed"]) {
                     
                 }else{
                     
-                    
-                    if (pntemp.length == 10||pntemp.length == 12||[pntemp containsString:@"-"]) {
-                        pn.text = [pntemp uppercaseString];
+                    if ([pntemp containsString:@"-"]) {
+                        pn.text = [[pntemp uppercaseString] substringToIndex:10];
+                        [arrAdd addObject:[[pntemp uppercaseString] substringToIndex:10]];
                     }
                     if ([[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""] hasPrefix:@"C3"]){
                         sn.text = [[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""] substringToIndex:7];
+                        [arrAdd addObject:[[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""] substringToIndex:7]];
                     }
                     if (pntemp.length == 9){
                         
                         ver.text =[[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@"O" withString:@"0"] substringFromIndex:pntemp.length-4];
+                         [arrAdd addObject:[[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@"O" withString:@"0"] substringFromIndex:pntemp.length-4]];
                     }
-                    if (pntemp.length == 4){
-                        
-                        ver.text =[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@"O" withString:@"0"] ;
-                    }
+//                    if (pntemp.length == 4){
+//
+//                        ver.text =[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@"O" withString:@"0"] ;
+//                    }
                 }
             }
-            
-            
-            //                    NSString *sntext =[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][1];
-            //                    NSString *snfinal = sntext.length==7?[sntext uppercaseString]:[[sntext substringFromIndex:1] uppercaseString];
-            //
-            //                    sn.text=snfinal;
-            
-            
-            
-            //     ver.text = [self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][2];
             
             [topContainerView addSubview:num];
             [topContainerView addSubview:pn];
@@ -364,12 +368,41 @@
             
             //  [topContainerView addSubview:num];
             [cell.contentView addSubview:topContainerView];
+            
+            [self.FinalArr addObject:arrAdd];
+            
+            
+         //   self.passLabel.text = @"Pass";
         }
         return cell;
     }
+   
 }
 
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 
+{
+     self.passLabel.text = @"Pass";
+     if (tableView == self.table2) {
+        
+        
+        for(int i= 0 ;i< self.FinalArr.count;i++){
+            
+            if ([self.FinalArr[i] count]!=4) {
+                cell.backgroundColor = [UIColor redColor];
+                self.passLabel.text = @"Fail";
+            }else{
+               cell.backgroundColor = [UIColor greenColor];
+            }
+            //        for (NSString *str in self.FinalArr[i]) {
+            //            if ([str isEqualToString:@""]) {
+            //
+            //            }
+            //        }
+        }
+    }
+    
+}
 
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 //    static NSString *ID = @"cell";
