@@ -23,7 +23,7 @@
     //  self.resultArr = [[NSMutableArray alloc]init];
     
     self.btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 100, 50)];
-    self.btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.btn.backgroundColor = [UIColor grayColor];
     [self.btn setTitle:@"请点击" forState:UIControlStateNormal]; // 正常状态
     [self.btn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
