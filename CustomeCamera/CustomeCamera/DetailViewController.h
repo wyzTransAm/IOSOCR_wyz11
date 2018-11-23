@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 //@property (weak, nonatomic) IBOutlet UITableView *table2;
 @property(nonatomic,strong)UIButton *btn;
 @property(nonatomic,strong)NSArray *SlotArr;
+@property(nonatomic,strong)NSMutableArray *FinalArr;
+@property(nonatomic,strong)UILabel *passLabel;
 @end
 
 NS_ASSUME_NONNULL_END
