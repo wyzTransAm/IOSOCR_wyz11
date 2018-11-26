@@ -21,6 +21,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //  self.resultArr = [[NSMutableArray alloc]init];
+    self.passLabel.text = @"Pass";
+    
+   // NSArray *array2 = [self.resultArr sortedArrayUsingSelector:@selector(compare:)];
+    
     self.FinalArr = [[NSMutableArray alloc]init];
     self.btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 100, 50)];
     self.btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -44,7 +48,7 @@
     
     [self.view addSubview:self.table];
     
-    self.table2 = [[UITableView alloc]initWithFrame:CGRectMake(0, HEIGHT_wyz/2, WIDTH_wyz,HEIGHT_wyz/2-100 ) style:UITableViewStylePlain];
+    self.table2 = [[UITableView alloc]initWithFrame:CGRectMake(0, HEIGHT_wyz/2, WIDTH_wyz,HEIGHT_wyz/2-80 ) style:UITableViewStylePlain];
     self.table2.dataSource = self;
     
     self.table2.delegate = self;
@@ -272,6 +276,7 @@
         
         return cell;
     }else{
+       
         // 定义cell标识  每个cell对应一个自己的标识
         NSString *CellIdentifier = [NSString stringWithFormat:@"cell45%ld",indexPath.row];
         UITableViewCell *cell = [self.table2 dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -333,7 +338,6 @@
             UILabel *sn = [[UILabel alloc]initWithFrame:CGRectMake(20, 50, 100, 15)];
             UILabel *ver =[[UILabel alloc]initWithFrame:CGRectMake(150, 50, 150, 15)];
             
-          
             for (int i =0; i<temparr.count; i++) {
                 
                 NSString *pntemp =temparr[i];
@@ -342,8 +346,11 @@
                 }else{
                     
                     if ([pntemp containsString:@"-"]) {
-                        pn.text = [[pntemp uppercaseString] substringToIndex:10];
-                        [arrAdd addObject:[[pntemp uppercaseString] substringToIndex:10]];
+                        if (pntemp.length>=10) {
+                            pn.text = [[pntemp uppercaseString] substringToIndex:10];
+                            [arrAdd addObject:[[pntemp uppercaseString] substringToIndex:10]];
+                        }
+                       
                     }
                     if ([[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""] hasPrefix:@"C3"]){
                         sn.text = [[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""] substringToIndex:7];
@@ -370,39 +377,45 @@
             [cell.contentView addSubview:topContainerView];
             
             [self.FinalArr addObject:arrAdd];
-            
+            if ([self.FinalArr[indexPath.row] count]<4) {
+                cell.backgroundColor = [UIColor redColor];
+                self.passLabel.text = @"Fail";
+            }else{
+                cell.backgroundColor = [UIColor greenColor];
+            }
             
          //   self.passLabel.text = @"Pass";
         }
+         
         return cell;
     }
    
 }
 
--(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-
-{
-     self.passLabel.text = @"Pass";
-     if (tableView == self.table2) {
-        
-        
-        for(int i= 0 ;i< self.FinalArr.count;i++){
-            
-            if ([self.FinalArr[i] count]!=4) {
-                cell.backgroundColor = [UIColor redColor];
-                self.passLabel.text = @"Fail";
-            }else{
-               cell.backgroundColor = [UIColor greenColor];
-            }
-            //        for (NSString *str in self.FinalArr[i]) {
-            //            if ([str isEqualToString:@""]) {
-            //
-            //            }
-            //        }
-        }
-    }
-    
-}
+//-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//
+//{
+//     self.passLabel.text = @"Pass";
+//     if (tableView == self.table2) {
+//
+//
+//        for(int i= 0 ;i< self.FinalArr.count;i++){
+//
+//            if ([self.FinalArr[i] count]!=4) {
+//                cell.backgroundColor = [UIColor redColor];
+//                self.passLabel.text = @"Fail";
+//            }else{
+//               cell.backgroundColor = [UIColor greenColor];
+//            }
+//            //        for (NSString *str in self.FinalArr[i]) {
+//            //            if ([str isEqualToString:@""]) {
+//            //
+//            //            }
+//            //        }
+//        }
+//    }
+//
+//}
 
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 //    static NSString *ID = @"cell";
