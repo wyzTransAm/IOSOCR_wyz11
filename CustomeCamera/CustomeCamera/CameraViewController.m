@@ -349,6 +349,11 @@
                     }
                 }];
             }
+//            if (pictureCount==13) {
+//                NSLog(@"取消");
+//                [self dismissViewControllerAnimated:YES completion:nil];
+//                [self configCallback];
+//            }
         }
     } else if([self.takePhotoBtn.titleLabel.text isEqualToString:@"开始"]){
         [self.takePhotoBtn setTitle:@"结束" forState:UIControlStateNormal];
@@ -446,100 +451,93 @@
 }
 
 - (IBAction)takePhotoAction:(id)sender {
-//    if ([self.takePhotoBtn.titleLabel.text isEqualToString:@"拍照"]) {
-//        if (pictureCount==13) {
-//            NSLog(@"取消");
-//            [self dismissViewControllerAnimated:YES completion:nil];
-//            [self configCallback];
-//        }else{
-//            pictureCount ++;//图片的张数
-//            AVCaptureConnection *connection = [self.iOutput connectionWithMediaType:AVMediaTypeVideo];
-//            if (!connection) {
-//                [[CustomeAlertView shareView] showCustomeAlertViewWithMessage:@"Default"];
-//            } else{
-//                [self.iOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-//                    if (!imageDataSampleBuffer) {
-//                        [[CustomeAlertView shareView] showCustomeAlertViewWithMessage:@"Default"];
-//                    } else{
-//                        [[CustomeAlertView shareView] showCustomeAlertViewWithMessage:@"Success"];
-//                        
-//                        NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-//                        UIImage *image = [UIImage imageWithData:imageData];
-//                        
-//                        CGImageRef sourceImageRef = [image CGImage];//将UIImage转换成CGImageRef
-//                        
-//                        CGSize imageSize = image.size;
-//                        CGRect rect;
-//                        rect =  CGRectMake(0,image.size.width/16*5, image.size.height,image.size.width/8*3 );
-//                        
-//                        
-//                        //根据图片的大小计算出图片中间矩形区域的位置与大小
-//                        //                    if (imageSize.width > imageSize.height) {
-//                        //                        float leftMargin = (imageSize.width - imageSize.height) * 0.5;
-//                        //                        //  rect = CGRectMake(leftMargin, 0, imageSize.height, imageSize.height);
-//                        //                         rect = CGRectMake( image.size.width/16*7,0, imageSize.width/8, image.size.height);
-//                        //                    }else{
-//                        //                        float topMargin = (imageSize.height - imageSize.width) * 0.5;
-//                        //                        //  rect = CGRectMake(0, topMargin, imageSize.width, imageSize.width);
-//                        //
-//                        //                         rect = CGRectMake(image.size.width/16*7,  0, image.size.width/8,image.size.height);
-//                        //                    }
-//                        
-//                        CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, rect);//按照给定的矩形区域进行剪裁
-//                        
-//                        
-//                        UIImage *newImage = [UIImage imageWithCGImage:newImageRef] ;
-//                        
-//                        
-//                        CGSize NewSize = CGSizeMake(100, 45);
-//                        UIGraphicsBeginImageContext(NewSize);
-//                        [newImage drawInRect:CGRectMake(0, 0, NewSize.width, NewSize.height)];
-//                        UIImage * newImage1 = UIGraphicsGetImageFromCurrentImageContext();
-//                        UIGraphicsEndImageContext();
-//                        
-//                        
-//                        
-//                        
-//                        
-//                        
-//                        
-//                        
-//                        
-//                
-//                        NSDictionary *options = @{@"language_type": @"CHN_ENG", @"detect_direction": @"true"};
-//                        [[AipOcrService shardService] detectTextAccurateBasicFromImage:newImage withOptions:options successHandler:^(id result) {
-//                            // 成功识别的后续逻辑
-//                            NSLog(@"%ld",pictureCount);
-//                            [mutArr addObject:result];
-//                        } failHandler:^(NSError *err) {
-//                            // 失败的后续逻辑
-//                            NSLog(@"失败");
-//                        }];
-//                        
-//                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-//                        UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil);
-//                        //     UIImageWriteToSavedPhotosAlbum(newImage1, nil, nil, nil);
-//                    }
-//                }];
-//                
-//            }
-//        }
-//    } else if([self.takePhotoBtn.titleLabel.text isEqualToString:@"开始"]){
-//        
-//        [self.takePhotoBtn setTitle:@"结束" forState:UIControlStateNormal];
-//        
-//        AVCaptureConnection *connect = [self.iMovieOutput connectionWithMediaType:AVMediaTypeVideo];
-//        NSURL *url = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingString:@"myMovie.mov"]];
-//        if (![self.iMovieOutput isRecording]) {
-//            [self.iMovieOutput startRecordingToOutputFileURL:url recordingDelegate:self];
-//        }
-//        
-//    } else if ([self.takePhotoBtn.titleLabel.text isEqualToString:@"结束"]){
-//        [self.takePhotoBtn setTitle:@"开始" forState:UIControlStateNormal];
-//        if ([self.iMovieOutput isRecording]) {
-//            [self.iMovieOutput stopRecording];
-//        }
-//    }
+    //    if ([self.takePhotoBtn.titleLabel.text isEqualToString:@"拍照"]) {
+    //        if (pictureCount==13) {
+    //            NSLog(@"取消");
+    //            [self dismissViewControllerAnimated:YES completion:nil];
+    //            [self configCallback];
+    //        }else{
+    //            pictureCount ++;//图片的张数
+    //            AVCaptureConnection *connection = [self.iOutput connectionWithMediaType:AVMediaTypeVideo];
+    //            if (!connection) {
+    //                [[CustomeAlertView shareView] showCustomeAlertViewWithMessage:@"Default"];
+    //            } else{
+    //                [self.iOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+    //                    if (!imageDataSampleBuffer) {
+    //                        [[CustomeAlertView shareView] showCustomeAlertViewWithMessage:@"Default"];
+    //                    } else{
+    //                        [[CustomeAlertView shareView] showCustomeAlertViewWithMessage:@"Success"];
+    //
+    //                        NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+    //                        UIImage *image = [UIImage imageWithData:imageData];
+    //
+    //                        CGImageRef sourceImageRef = [image CGImage];//将UIImage转换成CGImageRef
+    //
+    //                        CGSize imageSize = image.size;
+    //                        CGRect rect;
+    //                        rect =  CGRectMake(0,image.size.width/16*5, image.size.height,image.size.width/8*3 );
+    //
+    //
+    //                        //根据图片的大小计算出图片中间矩形区域的位置与大小
+    //                        //                    if (imageSize.width > imageSize.height) {
+    //                        //                        float leftMargin = (imageSize.width - imageSize.height) * 0.5;
+    //                        //                        //  rect = CGRectMake(leftMargin, 0, imageSize.height, imageSize.height);
+    //                        //                         rect = CGRectMake( image.size.width/16*7,0, imageSize.width/8, image.size.height);
+    //                        //                    }else{
+    //                        //                        float topMargin = (imageSize.height - imageSize.width) * 0.5;
+    //                        //                        //  rect = CGRectMake(0, topMargin, imageSize.width, imageSize.width);
+    //                        //
+    //                        //                         rect = CGRectMake(image.size.width/16*7,  0, image.size.width/8,image.size.height);
+    //                        //                    }
+    //
+    //                        CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, rect);//按照给定的矩形区域进行剪裁
+    //
+    //
+    //                        UIImage *newImage = [UIImage imageWithCGImage:newImageRef] ;
+    //
+    //
+    //                        CGSize NewSize = CGSizeMake(100, 45);
+    //                        UIGraphicsBeginImageContext(NewSize);
+    //                        [newImage drawInRect:CGRectMake(0, 0, NewSize.width, NewSize.height)];
+    //                        UIImage * newImage1 = UIGraphicsGetImageFromCurrentImageContext();
+    //                        UIGraphicsEndImageContext();
+    //
+
+    //
+    //                        NSDictionary *options = @{@"language_type": @"CHN_ENG", @"detect_direction": @"true"};
+    //                        [[AipOcrService shardService] detectTextAccurateBasicFromImage:newImage withOptions:options successHandler:^(id result) {
+    //                            // 成功识别的后续逻辑
+    //                            NSLog(@"%ld",pictureCount);
+    //                            [mutArr addObject:result];
+    //                        } failHandler:^(NSError *err) {
+    //                            // 失败的后续逻辑
+    //                            NSLog(@"失败");
+    //                        }];
+    //
+    //                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    //                        UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil);
+    //                        //     UIImageWriteToSavedPhotosAlbum(newImage1, nil, nil, nil);
+    //                    }
+    //                }];
+    //
+    //            }
+    //        }
+    //    } else if([self.takePhotoBtn.titleLabel.text isEqualToString:@"开始"]){
+    //
+    //        [self.takePhotoBtn setTitle:@"结束" forState:UIControlStateNormal];
+    //
+    //        AVCaptureConnection *connect = [self.iMovieOutput connectionWithMediaType:AVMediaTypeVideo];
+    //        NSURL *url = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingString:@"myMovie.mov"]];
+    //        if (![self.iMovieOutput isRecording]) {
+    //            [self.iMovieOutput startRecordingToOutputFileURL:url recordingDelegate:self];
+    //        }
+    //
+    //    } else if ([self.takePhotoBtn.titleLabel.text isEqualToString:@"结束"]){
+    //        [self.takePhotoBtn setTitle:@"开始" forState:UIControlStateNormal];
+    //        if ([self.iMovieOutput isRecording]) {
+    //            [self.iMovieOutput stopRecording];
+    //        }
+    //    }
 }
 - (IBAction)videoButtonAction:(id)sender {
     
@@ -571,7 +569,7 @@
         if ([self.iSession canAddOutput:self.iOutput]) {
             [self.iSession addOutput:self.iOutput];
             
-         //   [self.takePhotoBtn setTitle:@"拍照" forState:UIControlStateNormal];
+            //   [self.takePhotoBtn setTitle:@"拍照" forState:UIControlStateNormal];
             
         } else{
             [self.iSession addOutput:self.iMovieOutput];
