@@ -226,7 +226,7 @@
 				TargetAttributes = {
 					C8EC36221F20897F00F3974E = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = RUB6297FAD;
+						DevelopmentTeam = C8N866AP3G;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -392,7 +392,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RUB6297FAD;
+				DEVELOPMENT_TEAM = C8N866AP3G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -403,7 +403,7 @@
 				INFOPLIST_FILE = CustomeCamera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = wyz.Carmara123;
+				PRODUCT_BUNDLE_IDENTIFIER = wyz.Carmara1234;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 2;
@@ -418,7 +418,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RUB6297FAD;
+				DEVELOPMENT_TEAM = C8N866AP3G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -429,7 +429,7 @@
 				INFOPLIST_FILE = CustomeCamera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = wyz.Carmara123;
+				PRODUCT_BUNDLE_IDENTIFIER = wyz.Carmara1234;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 2;

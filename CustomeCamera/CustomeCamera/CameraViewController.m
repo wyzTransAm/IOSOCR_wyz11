@@ -93,12 +93,14 @@
     
     NSArray *dataarr = [strFinal componentsSeparatedByString:@"\n"];
     for (NSString *str in dataarr) {
-        for (int i=1; i<25; i++) {
-            NSString *scount = [NSString stringWithFormat:@"%d%@",i,@".0"];
-            BOOL isPre=[str hasPrefix:scount];
-            if (isPre) {
-                NSArray *temp = [str componentsSeparatedByString:@"\t"];
-                [Arr addObject:temp];
+        for (int i=0; i<25; i++) {
+            if(i%2==0){
+                NSString *scount = [NSString stringWithFormat:@"%d%@",i,@".0"];
+                BOOL isPre=[str hasPrefix:scount];
+                if (isPre) {
+                    NSArray *temp = [str componentsSeparatedByString:@"\t"];
+                    [Arr addObject:temp];
+                }
             }
         }
     }
@@ -109,13 +111,15 @@
     
     
     
-    _focusView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
-    _focusView.layer.borderWidth = 1.0;
-    _focusView.layer.borderColor =[UIColor greenColor].CGColor;
+    _focusView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_wyz, HEIGHT_wyz)];
+ //   _focusView.layer.borderWidth = 1.0;
+  //  _focusView.layer.borderColor =[UIColor greenColor].CGColor;
     _focusView.backgroundColor = [UIColor clearColor];
+    _focusView.userInteractionEnabled = YES;
     [self.view addSubview:_focusView];
-    _focusView.hidden = YES;
-    
+    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(subjectAreaDidChange:)];
+   // _focusView.hidden = YES;
+    [_focusView addGestureRecognizer:tapGesture];
     
     UIView *myView = [[UIView alloc]initWithFrame:CGRectMake(0, HEIGHT_wyz/16*5, WIDTH_wyz, HEIGHT_wyz/8*3)];
     //边框宽
