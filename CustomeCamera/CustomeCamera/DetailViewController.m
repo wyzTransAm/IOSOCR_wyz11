@@ -59,6 +59,26 @@
     [self.view addSubview:self.table2];
     
     self.SlotArr = [[NSArray alloc] initWithObjects:@"22.0",@"18.0",@"14.0",@"10.0",@"6.0",@"2.0",@"0.0",@"4.0",@"8.0",@"12.0",@"16.0",@"20.0",@"24.0",nil];
+    self.SlotArrTwo = [[NSMutableArray alloc] initWithObjects:@[@"22.0",@"",@"",@""],@[@"18.0",@"",@"",@""],@[@"14.0",@"",@"",@""],@[@"10.0",@"",@"",@""],@[@"6.0",@"",@"",@""],@[@"2.0",@"",@"",@""],@[@"0.0",@"",@"",@""],@[@"4.0",@"",@"",@""],@[@"8.0",@"",@"",@""],@[@"12.0",@"",@"",@""],@[@"16.0",@"",@"",@""],@[@"20.0",@"",@"",@""],@[@"24.0",@"",@"",@""],nil];
+    for(int i =12;i>=0;i--){
+        for (int j = 0; j<self.CurrentArr.count;j++) {
+            if ([self.SlotArrTwo[i][0] isEqualToString:self.CurrentArr[j][0]]) {
+                [self.SlotArrTwo removeObjectAtIndex:i];
+                NSMutableArray *arrAdd = [[NSMutableArray alloc]init];
+                [arrAdd addObject:[self.CurrentArr objectAtIndex:j][0]];
+                [arrAdd addObject:[self.CurrentArr[j][4] componentsSeparatedByString:@" "][0]];
+                NSString *sntext =[self.CurrentArr[j][4] componentsSeparatedByString:@" "][1];
+                NSString *snfinal = sntext.length==7?[sntext uppercaseString]:[[sntext substringFromIndex:1] uppercaseString];
+                [arrAdd addObject:snfinal];
+                [arrAdd addObject:[[self.CurrentArr[j][4] componentsSeparatedByString:@" "][2] substringToIndex:4]];
+                [self.SlotArrTwo insertObject:arrAdd atIndex:i];
+            }
+        }
+        
+    }
+    // self.CurrentArr
+    
+    
     //显示每组的尾部
     //    for (int j =0 ;j<self.CurrentArr.count ;j++) {
     //        NSString *num = self.CurrentArr[j][0];
@@ -114,7 +134,7 @@
     //         return self.resultArr.count;
     //    }
     if (tableView==self.table) {
-        return self.CurrentArr.count;
+        return self.SlotArrTwo.count;
     }else{
         return self.resultArr.count;
     }
@@ -254,23 +274,31 @@
             UIView *topContainerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_wyz, 90)];
             
             UILabel *num = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 50, 15)];
-            num.text =[self.CurrentArr objectAtIndex:indexPath.row][0];
-            [arrAdd addObject:[self.CurrentArr objectAtIndex:indexPath.row][0]];
+            num.text =[self.SlotArrTwo objectAtIndex:indexPath.row][0];
+            [arrAdd addObject:[self.SlotArrTwo objectAtIndex:indexPath.row][0]];
+            //            num.text =[self.CurrentArr objectAtIndex:indexPath.row][0];
+            //            [arrAdd addObject:[self.CurrentArr objectAtIndex:indexPath.row][0]];
             
             UILabel *pn = [[UILabel alloc]initWithFrame:CGRectMake(150, 10, 150, 15)];
-            pn.text = [self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][0];
-            [arrAdd addObject:[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][0]];
+            pn.text =[self.SlotArrTwo objectAtIndex:indexPath.row][1];
+            [arrAdd addObject:[self.SlotArrTwo objectAtIndex:indexPath.row][1]];
+            //            pn.text = [self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][0];
+            //            [arrAdd addObject:[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][0]];
             
-            UILabel *sn = [[UILabel alloc]initWithFrame:CGRectMake(20, 50, 100, 15)];
-            NSString *sntext =[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][1];
-            NSString *snfinal = sntext.length==7?[sntext uppercaseString]:[[sntext substringFromIndex:1] uppercaseString];
+            UILabel *sn = [[UILabel alloc]initWithFrame:CGRectMake(300, 10, 100, 15)];
+            sn.text =[self.SlotArrTwo objectAtIndex:indexPath.row][2];
+            [arrAdd addObject:[self.SlotArrTwo objectAtIndex:indexPath.row][2]];
+            //            NSString *sntext =[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][1];
+            //            NSString *snfinal = sntext.length==7?[sntext uppercaseString]:[[sntext substringFromIndex:1] uppercaseString];
             
-            sn.text=snfinal;
-            [arrAdd addObject:snfinal];
-            
-            UILabel *ver =[[UILabel alloc]initWithFrame:CGRectMake(150, 50, 150, 15)];
-            ver.text = [[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][2] substringToIndex:4];
-            [arrAdd addObject:[[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][2] substringToIndex:4]];
+            //            sn.text=snfinal;
+            //            [arrAdd addObject:snfinal];
+            //
+            UILabel *ver =[[UILabel alloc]initWithFrame:CGRectMake(450, 10, 150, 15)];
+            ver.text =[self.SlotArrTwo objectAtIndex:indexPath.row][3];
+            [arrAdd addObject:[self.SlotArrTwo objectAtIndex:indexPath.row][3]];
+            //            ver.text = [[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][2] substringToIndex:4];
+            //            [arrAdd addObject:[[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][2] substringToIndex:4]];
             
             [topContainerView addSubview:num];
             [topContainerView addSubview:pn];
@@ -341,8 +369,8 @@
             NSMutableArray *temparr =[message componentsSeparatedByString:@"\n"];
             
             UILabel *pn = [[UILabel alloc]initWithFrame:CGRectMake(150, 10, 150, 15)];
-            UILabel *sn = [[UILabel alloc]initWithFrame:CGRectMake(20, 50, 100, 15)];
-            UILabel *ver =[[UILabel alloc]initWithFrame:CGRectMake(150, 50, 150, 15)];
+            UILabel *sn = [[UILabel alloc]initWithFrame:CGRectMake(300, 10, 100, 15)];
+            UILabel *ver =[[UILabel alloc]initWithFrame:CGRectMake(450, 10, 150, 15)];
             
             for (int i =0; i<temparr.count; i++) {
                 
@@ -415,85 +443,48 @@
 
 {
     if(self.FinalArr.count==13){
+        //        if (cell.backgroundColor==[UIColor redColor]) {
+        //            self.passLabel.text = @"Fail";
+        //        }
         
         
-        for (int i=(self.FinalArrCopy.count-1); i>=0; i--) {
-            if ([self.FinalArrCopy[i] count]==1) {
-                [self.FinalArrCopy removeObjectAtIndex:i];
-            }
-        }
         
-        if (self.FinalArrCopy.count==self.FinalCurrentArr.count) {
-            for(int i=0;i<self.FinalArrCopy.count;i++){
-                if ([self.FinalArrCopy[i] count]!=4) {
-                    self.passLabel.text = @"Fail";
-                }else{
-                    self.passLabel.text = @"Pass";
-                }
-            }
-            //        self.set1= [NSMutableSet setWithArray:self.FinalArr];
-            //        self.set2= [NSMutableSet setWithArray:self.FinalCurrentArr];
-            //
-            //        [self.set1 intersectSet:self.set2];
-            //        if (self.set1.count<self.FinalArr.count) {
-            //             self.passLabel.text = @"Fail";
-            //            //两个不相等，FinalArr包含有CurrentArr没有的数据
-            //        }else if(self.set1.count==self.FinalArr.count){
-            //            if (self.set1.count==self.FinalCurrentArr.count) {
-            //                //数据匹配
-            //                self.passLabel.text = @"Pass";
-            //            }else{
-            //                //两个不相等，CurrentArr大于FinalArr的数据
-            //                 self.passLabel.text = @"Fail";
-            //            }
-            //        }else{
-            //            NSLog(@"算法出错了");
-            //        }
-        }else{
+        self.passLabel.text = @"Pass";
+        //        for (int i=(self.FinalArrCopy.count-1); i>=0; i--) {
+        //            if ([self.FinalArrCopy[i] count]==1) {
+        //                [self.FinalArrCopy removeObjectAtIndex:i];
+        //            }
+        //        }
+        
+        //        if (self.FinalArrCopy.count==self.SlotArrTwo.count) {
+        //            for(int i=0;i<self.FinalArrCopy.count;i++){
+        //                if ([self.FinalArrCopy[i] count]<4) {
+        //                    self.passLabel.text = @"Fail";
+        //                }
+        //            }
+        self.set1= [NSMutableSet setWithArray:self.FinalArrCopy];
+        self.set2= [NSMutableSet setWithArray:self.SlotArrTwo];
+        
+        [self.set1 intersectSet:self.set2];
+        if (self.set1.count<self.FinalArr.count) {
             self.passLabel.text = @"Fail";
+            //两个不相等，FinalArr包含有CurrentArr没有的数据
+        }else if(self.set1.count==self.FinalArrCopy.count){
+            if (self.set1.count==self.SlotArrTwo.count) {
+                //数据匹配
+                self.passLabel.text = @"Pass";
+            }else{
+                //两个不相等，CurrentArr大于FinalArr的数据
+                self.passLabel.text = @"Fail";
+            }
+        }else{
+            NSLog(@"算法出错了");
         }
+    }else{
+        self.passLabel.text = @"Fail";
     }
+    // }
 }
-
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    static NSString *ID = @"cell";
-//    // 根据标识去缓存池找cell
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-//    // 不写这句直接崩掉，找不到循环引用的cell
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-//
-//    }
-//
-//    //为单元格的label设置数据
-//   // cell.textLabel.text = [self.CurrentArr objectAtIndex:indexPath.row][0];
-//    UIView *topContainerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_wyz, 90)];
-//
-//    UILabel *num = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 50, 15)];
-//    num.text =[self.CurrentArr objectAtIndex:indexPath.row][0];
-//
-//    UILabel *pn = [[UILabel alloc]initWithFrame:CGRectMake(150, 10, 150, 15)];
-//    pn.text = [self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][0];
-//    UILabel *sn = [[UILabel alloc]initWithFrame:CGRectMake(20, 50, 100, 15)];
-//    sn.text=[self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][1];
-//    UILabel *ver =[[UILabel alloc]initWithFrame:CGRectMake(150, 50, 150, 15)];
-//    ver.text = [self.CurrentArr[indexPath.row][4] componentsSeparatedByString:@" "][2];
-//
-//    [topContainerView addSubview:num];
-//    [topContainerView addSubview:pn];
-//    [topContainerView addSubview:sn];
-//    [topContainerView addSubview:ver];
-//    [cell.contentView addSubview:topContainerView];
-//
-//
-//
-//    // 虽然我们可以在cell直接点出cell里面的控件，
-//    // 其实这些点出来的控件的父控件都是cell.contentView
-//
-//
-//
-//    return cell;
-//}
 
 //显示每组的头部
 
@@ -506,7 +497,7 @@
     return 30;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 90;
+    return 45;
 }
 /*
  #pragma mark - Navigation
