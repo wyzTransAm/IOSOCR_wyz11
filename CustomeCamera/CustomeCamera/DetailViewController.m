@@ -391,9 +391,16 @@
                         [arrAdd addObject:[[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""] substringToIndex:7]];
                     }
                     if (pntemp.length == 9){
-                        
-                        ver.text =[[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@"O" withString:@"0"] substringFromIndex:pntemp.length-4];
-                        [arrAdd addObject:[[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@"O" withString:@"0"] substringFromIndex:pntemp.length-4]];
+//                         &&([pntemp containsString:@"15"]||[pntemp containsString:@"16"]||[pntemp containsString:@"17"])
+                        NSString *vertemp =[[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@"O" withString:@"0"] substringFromIndex:pntemp.length-4];
+                        vertemp = [vertemp stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+                        if (vertemp.length>0) {
+                            
+                        }else{
+                            ver.text =[[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@"O" withString:@"0"] substringFromIndex:pntemp.length-4];
+                            [arrAdd addObject:[[[pntemp uppercaseString] stringByReplacingOccurrencesOfString:@"O" withString:@"0"] substringFromIndex:pntemp.length-4]];
+                        }
+                       
                     }
                     //                    if (pntemp.length == 4){
                     //
@@ -417,7 +424,7 @@
             
             if ([self.FinalArr[indexPath.row] count]<4&&[self.FinalArr[indexPath.row] count]>1) {
                 cell.backgroundColor = [UIColor redColor];
-                // self.passLabel.text = @"Fail";
+                self.passLabel.text = @"Fail";
             }else if ([self.FinalArr[indexPath.row] count]==1){
                 cell.backgroundColor = [UIColor grayColor];
                 
@@ -439,53 +446,76 @@
     
 }
 
--(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-
-{
-    if(self.FinalArr.count==13){
-        //        if (cell.backgroundColor==[UIColor redColor]) {
-        //            self.passLabel.text = @"Fail";
-        //        }
-        
-        
-        
-        self.passLabel.text = @"Pass";
-        //        for (int i=(self.FinalArrCopy.count-1); i>=0; i--) {
-        //            if ([self.FinalArrCopy[i] count]==1) {
-        //                [self.FinalArrCopy removeObjectAtIndex:i];
-        //            }
-        //        }
-        
-        //        if (self.FinalArrCopy.count==self.SlotArrTwo.count) {
-        //            for(int i=0;i<self.FinalArrCopy.count;i++){
-        //                if ([self.FinalArrCopy[i] count]<4) {
-        //                    self.passLabel.text = @"Fail";
-        //                }
-        //            }
-        self.set1= [NSMutableSet setWithArray:self.FinalArrCopy];
-        self.set2= [NSMutableSet setWithArray:self.SlotArrTwo];
-        
-        [self.set1 intersectSet:self.set2];
-        if (self.set1.count<self.FinalArr.count) {
-            self.passLabel.text = @"Fail";
-            //两个不相等，FinalArr包含有CurrentArr没有的数据
-        }else if(self.set1.count==self.FinalArrCopy.count){
-            if (self.set1.count==self.SlotArrTwo.count) {
-                //数据匹配
-                self.passLabel.text = @"Pass";
-            }else{
-                //两个不相等，CurrentArr大于FinalArr的数据
-                self.passLabel.text = @"Fail";
-            }
-        }else{
-            NSLog(@"算法出错了");
-        }
-    }else{
-        self.passLabel.text = @"Fail";
+//-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//
+//{
+//    if(self.FinalArrCopy.count==13){
+//        //        if (cell.backgroundColor==[UIColor redColor]) {
+//        //            self.passLabel.text = @"Fail";
+//        //        }
+//
+//
+//        NSMutableArray *SlotArrTwoCopy = [self.SlotArrTwo mutableCopy];
+//     //   self.passLabel.text = @"Pass";
+//                for (int i=(self.FinalArrCopy.count-1); i>=0; i--) {
+//                    if ([self.FinalArrCopy[i] count]==1) {
+//                        [self.FinalArrCopy removeObjectAtIndex:i];
+//                    }
+//                    if ([SlotArrTwoCopy[i][2] isEqualToString:@""]) {
+//                        [SlotArrTwoCopy removeObjectAtIndex:i];
+//                    }
+//                }
+//
+//                if (self.FinalArrCopy.count==SlotArrTwoCopy.count) {
+//                    for(int i=0;i<self.FinalArrCopy.count;i++){
+//                        if ([self.FinalArrCopy[i] count]!=[SlotArrTwoCopy[i] count]) {
+//                            self.passLabel.text = @"Fail";
+//                        }else{
+//                            if ([self.FinalArrCopy[i][0] isEqualToString:SlotArrTwoCopy [i][0]]&&[self.FinalArrCopy[i][1] isEqualToString:SlotArrTwoCopy [i][1]]&&[self.FinalArrCopy[i][2] isEqualToString:SlotArrTwoCopy [i][2]]) {
+//                                 self.passLabel.text = @"Pass";
+//                            }else{
+//                                self.passLabel.text = @"Fail";
+//                            }
+//                        }
+//                    }
+//                }else{
+//                    self.passLabel.text = @"Fail";
+//                }
+////        self.set1= [NSMutableSet setWithArray:self.FinalArrCopy];
+////        self.set2= [NSMutableSet setWithArray:SlotArrTwoCopy];
+////
+////        [self.set1 intersectSet:self.set2];
+////        if (self.set1.count<self.FinalArrCopy.count) {
+////            self.passLabel.text = @"Fail";
+////            //两个不相等，FinalArr包含有CurrentArr没有的数据
+////        }else if(self.set1.count==self.FinalArrCopy.count){
+////            if (self.set1.count==SlotArrTwoCopy.count) {
+////                //数据匹配
+////                self.passLabel.text = @"Pass";
+////            }else{
+////                //两个不相等，CurrentArr大于FinalArr的数据
+////                self.passLabel.text = @"Fail";
+////            }
+////        }else{
+////            NSLog(@"算法出错了");
+////        }
+//    }else{
+//       // self.passLabel.text = @"Fail";
+//    }
+//    // }
+//}
+- (BOOL)array:(NSArray *)array1 isEqualTo:(NSArray *)array2 {
+    if (array1.count != array2.count) {
+        return NO;
     }
-    // }
+    for (NSString *str in array1) {
+        if (![array2 containsObject:str]) {
+            return NO;
+        }
+    }
+    return YES;
+    
 }
-
 //显示每组的头部
 
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -498,6 +528,44 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 45;
+}
+-(void)viewDidAppear:(BOOL)animated{
+    if([self.passLabel.text isEqualToString:@"Fail"]){
+        self.passLabel.text = @"Fail";
+    }else{
+        self.passLabel.text = @"Pass";
+    }
+    if(self.FinalArrCopy.count==13){
+        NSMutableArray *SlotArrTwoCopy = [self.SlotArrTwo mutableCopy];
+        for (int i=(self.FinalArrCopy.count-1); i>=0; i--) {
+            if ([self.FinalArrCopy[i] count]==1) {
+                [self.FinalArrCopy removeObjectAtIndex:i];
+            }
+            if ([SlotArrTwoCopy[i][2] isEqualToString:@""]) {
+                [SlotArrTwoCopy removeObjectAtIndex:i];
+            }
+        }
+
+        if (self.FinalArrCopy.count==SlotArrTwoCopy.count) {
+            for(int i=0;i<self.FinalArrCopy.count;i++){
+                if ([self.FinalArrCopy[i] count]!=[SlotArrTwoCopy[i] count]) {
+                    self.passLabel.text = @"Fail";
+                   // break;
+                }else{
+                    if ([self.FinalArrCopy[i][0] isEqualToString:[SlotArrTwoCopy[i][0] uppercaseString]]&&[self.FinalArrCopy[i][1] isEqualToString:[SlotArrTwoCopy[i][2] uppercaseString]]) {
+                        self.passLabel.text = @"Pass";
+                    }else{
+                        self.passLabel.text = @"Fail";
+                      //  break;
+                    }
+                }
+            }
+        }else{
+            self.passLabel.text = @"Fail";
+        }
+    }else{
+        
+    }
 }
 /*
  #pragma mark - Navigation
